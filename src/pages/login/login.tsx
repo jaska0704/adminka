@@ -1,10 +1,10 @@
 import React from "react";
 import { Button, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useLogin } from "./service/useLogin";
+import { useLogin } from "./service/mutation/useLogin";
 import Cookies from "js-cookie";
 
-const token = Cookies.get("Token")
+const token = Cookies.get("Token");
 type FieldType = {
   phone_number: string;
   password: string;
@@ -13,17 +13,15 @@ type FieldType = {
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const { mutate } = useLogin();
- 
 
-  const onFinish = (data:FieldType) => {
-    console.log("salom");
+  const onFinish = (data: FieldType) => {
     mutate(data, {
       onSuccess: (data) => {
         console.log(data);
-        Cookies.set("Token", data.token)
-        if(token){
-           navigate("/home");
-        }
+        Cookies.set("Token", data.token, { expires: 7 });
+        
+          navigate("/home", { replace: true });
+        
       },
     });
   };

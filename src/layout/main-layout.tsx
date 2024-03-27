@@ -3,7 +3,9 @@ import { Layout, Menu } from "antd";
 import {
   LaptopOutlined,
   NotificationOutlined,
-  TruckOutlined,
+  HomeOutlined,
+  ContainerOutlined,
+  DatabaseOutlined,
 } from "@ant-design/icons";
 import { Link, Outlet } from "react-router-dom";
 import "./style-main.scss";
@@ -16,21 +18,24 @@ interface MenuItem {
   label: string | React.ReactNode;
 }
 
-
-
 const sideBar: MenuItem[] = [
   {
     key: 1,
-    icon: <TruckOutlined />,
-    label: <Link to="category-list">Category List</Link>,
+    icon: <HomeOutlined />,
+    label: <Link to="/home">Home</Link>,
   },
   {
     key: 2,
-    icon: <NotificationOutlined />,
-    label: "O'yinchoqlar",
+    icon: <DatabaseOutlined />,
+    label: <Link to="category-list">Category List</Link>,
   },
   {
     key: 3,
+    icon: <ContainerOutlined />,
+    label: <Link to={"sub-category-list"}>Sub Category</Link>,
+  },
+  {
+    key: 4,
     icon: <LaptopOutlined />,
     label: "Noutbuk",
   },
@@ -55,15 +60,14 @@ export const MainLayout: React.FC = () => {
               defaultSelectedKeys={["1"]}
               defaultOpenKeys={["sub1"]}
               style={{ height: "100%", borderRight: 0 }}
-              // onSelect={(item) => console.log(item)}
+              onSelect={(item) => console.log(item)}
             >
               {items2.map((item) => (
                 <Menu.SubMenu
                   key={item.key}
                   icon={item.icon}
                   title={item.label}
-                >
-                </Menu.SubMenu>
+                ></Menu.SubMenu>
               ))}
             </Menu>
           </Sider>

@@ -16,8 +16,7 @@ function App() {
               <Route index={path ? false : true} key={id} path={path} element={<Element/>}/>
           ))}
       </Route>
-    </Routes>
-     
+    </Routes> 
     </>
   )
 }
