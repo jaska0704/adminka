@@ -1,25 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
 import { request } from "../../../../config/request";
 
-interface taypes {
-  data: {
-    id: number;
-    title: string;
-    image?: string
-    parent: string;
-  };
-}
 
-export const useCreateCategory = () => {
+export const useEditPatch = (id:string | undefined) => {
   return useMutation({
-    mutationFn: (data: FormData) =>
+    mutationFn: (  data: FormData) =>
       request
-        .post<taypes>(`/category/`, data, {
+        .put(`/category/${id}/`, data, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         })
         .then((res) => res.data),
-        
   });
 };

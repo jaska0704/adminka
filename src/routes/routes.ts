@@ -9,6 +9,12 @@ import { BrandList } from "../pages/brand/brand-list";
 import { SubCategoryCreate } from "../pages/sub-category/sub-category-create";
 import { SubCategoryEdit } from "../pages/sub-category/sub-category-edit";
 import { SubCategoryList } from "../pages/sub-category/sub-category-list";
+import { AttributeCreate } from "../pages/attribute/attribute-create";
+import { AttributeEdit } from "../pages/attribute/attribute-edit";
+import { AttributeList } from "../pages/attribute/attribute-list";
+import { ProductCreate } from "../pages/product/product-create";
+import { ProductEdit } from "../pages/product/product-edit";
+import { ProductList } from "../pages/product/product-list";
 
 
 
@@ -67,5 +73,35 @@ export const mainPages: Routes[] = [
         id: nanoid(),
         component: BrandEdit,
         path: "brand-edit/:id",
+    },
+    {
+        id: nanoid(),
+        component: AttributeEdit,
+        path: "attribut-edit/:id",
+    },
+    {
+        id: nanoid(),
+        component: AttributeCreate,
+        path: "attribute-create",
+    },
+    {
+        id: nanoid(),
+        component: AttributeList,
+        path: "attribute-list",
+    },
+    {
+        id: nanoid(),
+        component: ProductList,
+        path: "product-list",
+    },
+    {
+        id: nanoid(),
+        component: ProductEdit,
+        path: "product-edit/:id",
+    },
+    {
+        id: nanoid(),
+        component: ProductCreate,
+        path: "product-create",
     },
 ]

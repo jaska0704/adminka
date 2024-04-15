@@ -1,25 +1,27 @@
 import { useMutation } from "@tanstack/react-query";
 import { request } from "../../../../config/request";
 
-interface taypes {
+interface CreateType {
   data: {
     id: number;
     title: string;
-    image?: string
+    image?: {
+      file: File;
+      fileList: FileList;
+    };
     parent: string;
   };
 }
 
-export const useCreateCategory = () => {
+export const useCreateSubCategory = () => {
   return useMutation({
     mutationFn: (data: FormData) =>
       request
-        .post<taypes>(`/category/`, data, {
+        .post<CreateType>(`/category/`, data, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         })
         .then((res) => res.data),
-        
   });
 };

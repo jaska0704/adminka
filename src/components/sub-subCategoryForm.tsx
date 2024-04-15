@@ -1,41 +1,38 @@
 import React from "react";
 import { InboxOutlined } from "@ant-design/icons";
 import {
-  Button,
   Form,
-  Image,
   Input,
-  Spin,
   Upload,
   UploadFile,
+  Button,
   UploadProps,
+  Image,
 } from "antd";
-import { TypeCategory } from "../pages/category/types/type-category";
+import { CategoriesType } from "../pages/category/types/type-category";
 
-interface CategoryFormProps {
-  submit: (data: TypeCategory) => void;
-  isPending?: boolean;
+interface SubCategoryProps {
+  submit: (data: CategoriesType) => void;
+  isPending: boolean;
   initialValues?: {
     title?: string;
     image?: string;
-    id?: number;
   };
 }
 
-export const CategoryForm: React.FC<CategoryFormProps> = ({
-  isPending,
+export const SubSubCategoryForm: React.FC<SubCategoryProps> = ({
   submit,
   initialValues,
 }) => {
+  
   const [fileList, setFileList] = React.useState<UploadFile[]>([]);
   const [form] = Form.useForm();
 
   const onchange: UploadProps["onChange"] = ({ fileList }) => {
     setFileList(fileList);
   };
-  return isPending ? (
-    <Spin />
-  ) : (
+
+  return (
     <Form
       form={form}
       labelCol={{ span: 4 }}
@@ -45,10 +42,20 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
       onFinish={submit}
       initialValues={initialValues}
     >
-      <Form.Item name={"title"} rules={[{ required: true }]} label="Input">
+
+      <Form.Item
+        label="Title"
+        name="title"
+        rules={[{ required: true, message: "Please input a title!" }]}
+      >
         <Input />
       </Form.Item>
-      <Form.Item label="Upload" name={"image"}>
+
+      <Form.Item
+        label="Image"
+        name="image"
+        rules={[{ required: true, message: "Please upload an image!" }]}
+      >
         <Upload.Dragger
           maxCount={1}
           beforeUpload={() => false}
@@ -70,7 +77,6 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
           src={initialValues.image}
         />
       )}
-      <br />
       <Button type="primary" htmlType="submit">
         Submit
       </Button>

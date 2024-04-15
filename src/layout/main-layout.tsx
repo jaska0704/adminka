@@ -1,11 +1,11 @@
 import React from "react";
 import { Layout, Menu } from "antd";
 import {
-  LaptopOutlined,
-  NotificationOutlined,
   HomeOutlined,
   ContainerOutlined,
   DatabaseOutlined,
+  MenuFoldOutlined,
+  SafetyOutlined,
 } from "@ant-design/icons";
 import { Link, Outlet } from "react-router-dom";
 import "./style-main.scss";
@@ -36,8 +36,22 @@ const sideBar: MenuItem[] = [
   },
   {
     key: 4,
-    icon: <LaptopOutlined />,
-    label: "Noutbuk",
+    icon: <MenuFoldOutlined />,
+    label: <Link to={"attribute-list"}>Attribute List</Link>,
+  },
+  {
+    key: 5,
+    icon: <SafetyOutlined />,
+    label: <Link to={"brand-list"}>Brand</Link>,
+  },
+  {
+    key: 6,
+    icon: <SafetyOutlined />,
+    label: (
+      <Link to={"product-list"} style={{ }}>
+        Product
+      </Link>
+    ),
   },
 ];
 
@@ -59,7 +73,12 @@ export const MainLayout: React.FC = () => {
             <Menu
               defaultSelectedKeys={["1"]}
               defaultOpenKeys={["sub1"]}
-              style={{ height: "100%", borderRight: 0 }}
+              style={{
+                height: "100%",
+                borderRight: 0,
+                fontFamily: "Lilita One",
+                fontSize: "18px",
+              }}
               onSelect={(item) => console.log(item)}
             >
               {items2.map((item) => (
@@ -72,7 +91,13 @@ export const MainLayout: React.FC = () => {
             </Menu>
           </Sider>
           <Layout style={{ padding: "0 24px 24px" }}>
-            <Content style={{ padding: 24 }}>
+            <Content
+              style={{
+                padding: 24,
+                backgroundColor: "#e7a200",
+                overflow: "scroll",
+              }}
+            >
               <Outlet />
             </Content>
           </Layout>

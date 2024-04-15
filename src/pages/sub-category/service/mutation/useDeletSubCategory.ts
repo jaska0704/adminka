@@ -4,6 +4,6 @@ import { useMutation } from "@tanstack/react-query";
 export const useDeletSubCategory = () => {
   return useMutation({
     mutationFn: (id: number) =>
-      request.delete(`/subcategory/${id}/`).then((res) => res.data),
+      request.delete(`/category/${id}/`).then((res) => res.data),
   });
 };
