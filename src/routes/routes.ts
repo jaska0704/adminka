@@ -15,7 +15,9 @@ import { AttributeList } from "../pages/attribute/attribute-list";
 import { ProductCreate } from "../pages/product/product-create";
 import { ProductEdit } from "../pages/product/product-edit";
 import { ProductList } from "../pages/product/product-list";
-
+import BannerList from "../pages/banner/banner-list";
+import { BannerCreate } from "../pages/banner/banner-create";
+import { BannerEdit } from "../pages/banner/banner-edit";
 
 
 interface Routes {
@@ -103,5 +105,20 @@ export const mainPages: Routes[] = [
         id: nanoid(),
         component: ProductCreate,
         path: "product-create",
+    },
+    {
+        id: nanoid(),
+        component: BannerCreate,
+        path: "banner-create",
+    },
+    {
+        id: nanoid(),
+        component: BannerEdit,
+        path: "banner-edit/:id",
+    },
+    {
+        id: nanoid(),
+        component: BannerList,
+        path: "banner-list",
     },
 ]

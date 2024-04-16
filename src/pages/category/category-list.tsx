@@ -16,7 +16,7 @@ interface Category {
 
 export const CategoryList: FC = () => {
   const [pages, setPages] = React.useState(1);
-  const { data, isPending: dataPending } = useGetCategoryList("id", pages);
+  const { data, isPending: dataPending } = useGetCategoryList(pages);
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
   const { mutate, isPending } = usedeletCategory();
@@ -99,7 +99,7 @@ export const CategoryList: FC = () => {
           Search
         </Button>
         <Modal
-          title="Modal 1000px width"
+          title=""
           centered
           open={open}
           onOk={() => setOpen(false)}
@@ -108,7 +108,7 @@ export const CategoryList: FC = () => {
         >
           <Search
             style={{ position: "relative", paddingBlock: "10px" }}
-            placeholder="input search text"
+            placeholder="Search text"
             enterButton="Search"
             size="large"
             onChange={(e) => setSearch(e.target.value.trimStart())}

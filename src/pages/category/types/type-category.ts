@@ -97,3 +97,26 @@ export interface TypeProduct {
   price: string;
   category: string;
 }
+export interface typeBanner {
+  count: number;
+  next: null | number;
+  previous: null | number;
+  results: {
+    created_at: string;
+    description: string;
+    id: number;
+    image: string;
+    title: string;
+    updated_at: string;
+  }[];
+}
+
+export interface TypeBanner {
+  description: string;
+  id: number;
+  image: {
+    file: File;
+    fileList: UploadFile;
+  };
+  title: string;
+}

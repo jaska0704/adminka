@@ -14,14 +14,13 @@ interface Category {
 }
 
 export const useGetCategoryList = (
-  id: string = "id",
   pages?: number
 ) => {
   return useQuery({
-    queryKey: ["categoryList", id, pages],
+    queryKey: ["categoryList", pages],
     queryFn: () => {
       return request
-        .get<Category>(`/category/?ordering=${id}`, {
+        .get<Category>(`/category/`, {
           params: { offset: pages, limit: 5 },
         })
         .then((res) =>{

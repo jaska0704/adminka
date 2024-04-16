@@ -34,11 +34,11 @@ const sideBar: MenuItem[] = [
     icon: <ContainerOutlined />,
     label: <Link to={"sub-category-list"}>Sub Category</Link>,
   },
-  {
-    key: 4,
-    icon: <MenuFoldOutlined />,
-    label: <Link to={"attribute-list"}>Attribute List</Link>,
-  },
+  // {
+  //   key: 4,
+  //   icon: <MenuFoldOutlined />,
+  //   label: <Link to={"attribute-list"}>Attribute List</Link>,
+  // },
   {
     key: 5,
     icon: <SafetyOutlined />,
@@ -50,6 +50,15 @@ const sideBar: MenuItem[] = [
     label: (
       <Link to={"product-list"} style={{ }}>
         Product
+      </Link>
+    ),
+  },
+  {
+    key: 7,
+    icon: <SafetyOutlined />,
+    label: (
+      <Link to={"banner-list"} style={{ }}>
+        Banner List
       </Link>
     ),
   },
@@ -78,6 +87,7 @@ export const MainLayout: React.FC = () => {
                 borderRight: 0,
                 fontFamily: "Lilita One",
                 fontSize: "18px",
+                color:"#034323"
               }}
               onSelect={(item) => console.log(item)}
             >
@@ -94,7 +104,7 @@ export const MainLayout: React.FC = () => {
             <Content
               style={{
                 padding: 24,
-                backgroundColor: "#e7a200",
+                backgroundColor: "#aecbf1",
                 overflow: "scroll",
               }}
             >

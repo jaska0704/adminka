@@ -1,12 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
 import { request } from "../../../../config/request";
+import { typeBanner } from "../../../category/types/type-category";
 
 
-export const useEditPatch = (id:string | undefined) => {
+export const useCreateBanner = () => {
   return useMutation({
-    mutationFn: ( data: FormData) =>
+    mutationFn: (data: FormData) =>
       request
-        .put(`/category/${id}/`, data, {
+        .post<typeBanner>(`/banner/`, data, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
