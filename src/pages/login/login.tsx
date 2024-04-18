@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useLogin } from "./service/mutation/useLogin";
 import Cookies from "js-cookie";
 
-const token = Cookies.get("Token");
+
 type FieldType = {
   phone_number: string;
   password: string;
