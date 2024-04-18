@@ -11,7 +11,7 @@ interface Type {
 
 export const useGetBanner = (id:string | undefined) => {
   return useQuery({
-    queryKey: ["bannerList", id],
+    queryKey: ["banner_List", id],
     queryFn: () => {
       return request.get<Type>(`/banner/${id}/`).then((res) => res.data);
     },

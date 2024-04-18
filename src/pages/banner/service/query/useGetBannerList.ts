@@ -15,11 +15,16 @@ interface Category {
   }[];
 }
 
-export const useGetBannerList = () => {
+export const useGetBannerList = (pages:number) => {
   return useQuery({
-    queryKey: ["bannerList"],
+    queryKey: ["bannerList", pages],
     queryFn: () => {
-      return request.get<Category>(`/banner/`).then((res) => res.data.results);
+      return request.get<Category>(`/banner/`, {params:{offset:pages, limit:7}}).then((res) => {
+        return {
+          data: res.data.results,
+          pagesSize:Math.ceil(res.data.count)
+        };
+      });
     },
   });
 };

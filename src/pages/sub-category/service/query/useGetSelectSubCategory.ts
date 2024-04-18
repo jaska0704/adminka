@@ -16,20 +16,13 @@ interface Category {
   }[];
 }
 
-export const useGetSubCategoryList = (pages?: number) => {
+export const useGetSelectSubcategory = () => {
   return useQuery({
-    queryKey: ["subcategoryList", pages],
+    queryKey: ["subcategory_List"],
     queryFn: () => {
       return request
-        .get<Category>(`/api/subcategory/`, {
-          params: { offset: pages, limit: 5 },
-        })
-        .then((res) => {
-          return {
-            data: res.data,
-            pagesSize: Math.ceil(res.data.count),
-          };
-        });
+        .get<Category>(`/category/`)
+        .then((res) => res.data.results);
     },
   });
 };

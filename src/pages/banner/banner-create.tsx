@@ -1,4 +1,4 @@
-import { BannerForm } from "../../components/bannerForm";
+import { BannerForm } from "../../components/banner-form";
 import { useCreateBanner } from "./service/mutation/useCreateBanner";
 import { TypeBanner } from "../category/types/type-category";
 import { message } from "antd";
@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export const BannerCreate = () => {
   const { mutate, isPending } = useCreateBanner();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const submit = (value: TypeBanner) => {
     const dataForm = new FormData();
@@ -23,8 +23,8 @@ export const BannerCreate = () => {
         }, 3000);
       },
       onError: () => {
-        message.error("Error")
-      }
+        message.error("Error");
+      },
     });
   };
 

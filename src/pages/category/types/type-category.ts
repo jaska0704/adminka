@@ -120,3 +120,36 @@ export interface TypeBanner {
   };
   title: string;
 }
+
+export interface BrandType {
+  count: number;
+  next: null | number;
+  previous: null | number;
+  results: {
+    id: number;
+    title: string;
+    image: string;
+  }[]
+}
+
+export interface brand {
+  id: number;
+  image: {
+    file: File;
+    fileList: UploadFile;
+  };
+  title: string;
+}
+
+export interface types {
+  title: string;
+  image: string;
+  id: number;
+}
+
+export interface CategoryListType {
+  id: number;
+  title: string;
+  image: string;
+}
+[];

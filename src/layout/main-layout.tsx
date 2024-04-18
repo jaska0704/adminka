@@ -1,116 +1,187 @@
 import React from "react";
-import { Layout, Menu } from "antd";
+import { Button, Layout, Menu, theme } from "antd";
 import {
   HomeOutlined,
   ContainerOutlined,
   DatabaseOutlined,
   MenuFoldOutlined,
   SafetyOutlined,
+  MenuUnfoldOutlined,
 } from "@ant-design/icons";
 import { Link, Outlet } from "react-router-dom";
 import "./style-main.scss";
+import image from "../../public/icons.png";
+import Cookies from "js-cookie";
 
 const { Header, Content, Sider } = Layout;
 
-interface MenuItem {
-  key: number;
-  icon: React.ReactNode;
-  label: string | React.ReactNode;
-}
+// interface MenuItem {
+//   key: number;
+//   icon: React.ReactNode;
+//   label: string | React.ReactNode;
+// }
 
-const sideBar: MenuItem[] = [
-  {
-    key: 1,
-    icon: <HomeOutlined />,
-    label: <Link to="/home">Home</Link>,
-  },
-  {
-    key: 2,
-    icon: <DatabaseOutlined />,
-    label: <Link to="category-list">Category List</Link>,
-  },
-  {
-    key: 3,
-    icon: <ContainerOutlined />,
-    label: <Link to={"sub-category-list"}>Sub Category</Link>,
-  },
-  // {
-  //   key: 4,
-  //   icon: <MenuFoldOutlined />,
-  //   label: <Link to={"attribute-list"}>Attribute List</Link>,
-  // },
-  {
-    key: 5,
-    icon: <SafetyOutlined />,
-    label: <Link to={"brand-list"}>Brand</Link>,
-  },
-  {
-    key: 6,
-    icon: <SafetyOutlined />,
-    label: (
-      <Link to={"product-list"} style={{ }}>
-        Product
-      </Link>
-    ),
-  },
-  {
-    key: 7,
-    icon: <SafetyOutlined />,
-    label: (
-      <Link to={"banner-list"} style={{ }}>
-        Banner List
-      </Link>
-    ),
-  },
-];
+// const sideBar: MenuItem[] = [
+ 
+// ];
 
-const items2: MenuItem[] = sideBar.map((item) => ({
-  key: item.key,
-  icon: item.icon,
-  label: item.label,
-}));
+// const items2: MenuItem[] = sideBar.map((item) => ({
+//   key: item.key,
+//   icon: item.icon,
+//   label: item.label,
+// }));
 
 export const MainLayout: React.FC = () => {
+
+  const token = Cookies.get("Token");
+  const [collapsed, setCollapsed] = React.useState(false);
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+
   return (
     <div className="main__layout">
-      <Layout style={{ height: "100vh" }}>
-        <Header style={{ display: "flex", alignItems: "center" }}>
-          <div className="demo-logo" />
-        </Header>
+      <Layout>
+        <Sider trigger={null} collapsible collapsed={collapsed} width={250} style={{height:"100vh"}}>
+          {!collapsed ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <img
+                src={image}
+                style={{
+                  paddingTop: "10px",
+                  paddingLeft: "10px",
+                  width: "50px",
+                  marginBottom: "5px",
+                }}
+                alt="LogoIcon"
+              />
+              <h3
+                style={{
+                  fontFamily: "Lobster, sans-serif",
+                  color: "#e74c3c",
+                  fontSize: "23px",
+                  lineHeight: "0.65",
+                  fontWeight: "300",
+                }}
+              >
+                Admin Panel
+              </h3>
+            </div>
+          ) : (
+            ""
+          )}
+          <Menu
+            theme="dark"
+            mode="inline"
+            defaultSelectedKeys={["1"]}
+            items={[
+              {
+                key: 1,
+                icon: (
+                  <HomeOutlined style={{ fontSize: "20px", color: "#08c" }} />
+                ),
+                label: (
+                  <Link to="/home" style={{ color: "#AECBF1" }}>
+                    Home
+                  </Link>
+                ),
+              },
+              {
+                key: 2,
+                icon: (
+                  <DatabaseOutlined
+                    style={{ fontSize: "20px", color: "#08c" }}
+                  />
+                ),
+                label: (
+                  <Link to="category-list" style={{ color: "#AECBF1" }}>
+                    Category List
+                  </Link>
+                ),
+              },
+              {
+                key: 3,
+                icon: (
+                  <ContainerOutlined
+                    style={{ fontSize: "20px", color: "#08c" }}
+                  />
+                ),
+                label: (
+                  <Link to={"sub-category-list"} style={{ color: "#AECBF1" }}>
+                    Sub Category
+                  </Link>
+                ),
+              },
+              // {
+              //   key: 4,
+              //   icon: <MenuFoldOutlined />,
+              //   label: <Link to={"attribute-list"} style={{color:"##AECBF1}}>Attribute List</Link>,
+              // },
+              {
+                key: 5,
+                icon: (
+                  <SafetyOutlined style={{ fontSize: "20px", color: "#08c" }} />
+                ),
+                label: (
+                  <Link to={"brand-list"} style={{ color: "#AECBF1" }}>
+                    Brand
+                  </Link>
+                ),
+              },
+              {
+                key: 6,
+                icon: (
+                  <SafetyOutlined style={{ fontSize: "20px", color: "#08c" }} />
+                ),
+                label: (
+                  <Link to={"product-list"} style={{ color: "#AECBF1" }}>
+                    Product
+                  </Link>
+                ),
+              },
+              {
+                key: 7,
+                icon: (
+                  <SafetyOutlined style={{ fontSize: "20px", color: "#08c" }} />
+                ),
+                label: (
+                  <Link to={"banner-list"} style={{ color: "#AECBF1" }}>
+                    Banner List
+                  </Link>
+                ),
+              },
+            ]}
+          />
+        </Sider>
         <Layout>
-          <Sider width={200}>
-            <Menu
-              defaultSelectedKeys={["1"]}
-              defaultOpenKeys={["sub1"]}
+          <Header style={{ padding: 0, background: colorBgContainer }}>
+            <Button
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={() => setCollapsed(!collapsed)}
               style={{
-                height: "100%",
-                borderRight: 0,
-                fontFamily: "Lilita One",
-                fontSize: "18px",
-                color:"#034323"
+                fontSize: "16px",
+                width: 64,
+                height: 64,
               }}
-              onSelect={(item) => console.log(item)}
-            >
-              {items2.map((item) => (
-                <Menu.SubMenu
-                  key={item.key}
-                  icon={item.icon}
-                  title={item.label}
-                ></Menu.SubMenu>
-              ))}
-            </Menu>
-          </Sider>
-          <Layout style={{ padding: "0 24px 24px" }}>
-            <Content
-              style={{
-                padding: 24,
-                backgroundColor: "#aecbf1",
-                overflow: "scroll",
-              }}
-            >
-              <Outlet />
-            </Content>
-          </Layout>
+            />
+          </Header>
+          <Content
+            style={{
+              padding: 24,
+              backgroundColor: "#aecbf1",
+              overflow: "scroll",
+            }}
+          >
+            <Outlet />
+          </Content>
         </Layout>
       </Layout>
     </div>

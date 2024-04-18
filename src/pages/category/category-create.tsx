@@ -55,13 +55,11 @@ export const CategoryCreate = () => {
     mutate(formData, {
       onSuccess: (res) => {
         setCategoryes(String(res.data.id));
-        console.log(res);
-
-        message.success("success");
+        message.success("Category created successfully!");
         setFormSubmit(true);
       },
       onError: () => {
-        message.error("error");
+        message.error("Error");
       },
     });
   };
@@ -80,7 +78,7 @@ export const CategoryCreate = () => {
     {
       key: "2",
       label: "Create Sub Category",
-      children: <SubSubCategoryForm submit={subsubmit} isPending />,
+      children: <SubSubCategoryForm submit={subsubmit} />,
       disabled: disaeblade,
     },
   ];

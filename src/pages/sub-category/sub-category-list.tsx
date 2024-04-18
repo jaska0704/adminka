@@ -1,6 +1,8 @@
 import { useGetSubCategoryList } from "./service/query/useGetSubCategory";
+import { TinyColor } from "@ctrl/tinycolor";
 import {
   Button,
+  ConfigProvider,
   Image,
   Pagination,
   Popconfirm,
@@ -32,6 +34,13 @@ interface DataType {
   key: number;
 }
 [];
+
+const colors2 = ["#fc6076", "#ff9a44", "#ef9d43", "#e75516"];
+const colors3 = ["#40e495", "#30dd8a", "#2bb673"];
+const getHoverColors = (colors: string[]) =>
+  colors.map((color) => new TinyColor(color).lighten(5).toString());
+const getActiveColors = (colors: string[]) =>
+  colors.map((color) => new TinyColor(color).darken(5).toString());
 
 export const SubCategoryList: React.FC = () => {
   const [pages, setPages] = React.useState(1);
@@ -86,27 +95,74 @@ export const SubCategoryList: React.FC = () => {
       dataIndex: "tags",
       render: (_, data) => (
         <div style={{ display: "flex", gap: "15px" }}>
-          <Popconfirm
-            onConfirm={() => remove(data.id)}
-            title={"Are you delete Sub Category?"}
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  colorPrimary: `linear-gradient(90deg,  ${colors2.join(
+                    ", "
+                  )})`,
+                  colorPrimaryHover: `linear-gradient(90deg, ${getHoverColors(
+                    colors2
+                  ).join(", ")})`,
+                  colorPrimaryActive: `linear-gradient(90deg, ${getActiveColors(
+                    colors2
+                  ).join(", ")})`,
+                  lineWidth: 0,
+                },
+              },
+            }}
           >
-            <Button>Delet</Button>
-          </Popconfirm>
-          <Button
-            onClick={() => navigate(`/home/sub-category-edit/${data.id}`)}
+            <Popconfirm
+              onConfirm={() => remove(data.id)}
+              title={"Are you delete Sub Category?"}
+            >
+              <Button type="primary" size="large" style={{ width: 100 }}>
+                Delet
+              </Button>
+            </Popconfirm>
+          </ConfigProvider>
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  colorPrimary: `linear-gradient(116deg,  ${colors3.join(
+                    ", "
+                  )})`,
+                  colorPrimaryHover: `linear-gradient(116deg, ${getHoverColors(
+                    colors3
+                  ).join(", ")})`,
+                  colorPrimaryActive: `linear-gradient(116deg, ${getActiveColors(
+                    colors3
+                  ).join(", ")})`,
+                  lineWidth: 0,
+                },
+              },
+            }}
           >
-            Edit
-          </Button>
+            <Button
+              onClick={() => navigate(`/home/sub-category-edit/${data.id}`)}
+              type="primary"
+              size="large"
+              style={{ width: 100 }}
+            >
+              Edit
+            </Button>
+          </ConfigProvider>
         </div>
       ),
     },
   ];
 
-  return isPending || dataPending ? (
+  return isPending ? (
     <Spin />
   ) : (
     <div>
-      <div style={{ paddingBottom: "20px" }}>
+      <div
+        style={{
+          paddingBottom: "20px",
+        }}
+      >
         <Button
           onClick={() => navigate("/home/sub-category-create")}
           type="primary"
@@ -114,12 +170,16 @@ export const SubCategoryList: React.FC = () => {
           Create
         </Button>
       </div>
-      <Table
-        dataSource={dataCategory}
-        style={{ height: "68vh", overflow: "auto" }}
-        columns={columns}
-        pagination={false}
-      />
+      {dataPending ? (
+        <Spin fullscreen style={{ height: "100%" }} />
+      ) : (
+        <Table
+          dataSource={dataCategory}
+          style={{ height: "73vh", overflow: "auto" }}
+          columns={columns}
+          pagination={false}
+        />
+      )}
       <Pagination
         total={data?.pagesSize}
         onChange={(sizes) => setPages((sizes - 1) * 5)}
@@ -127,10 +187,12 @@ export const SubCategoryList: React.FC = () => {
         defaultCurrent={1}
         style={{
           padding: "5px",
-          backgroundColor: "#d6b5d6",
-          width: "100%",
+          // backgroundColor: "#415cf0",
+          width: "90vw",
           borderBottomRightRadius: "15px",
           borderBottomLeftRadius: "15px",
+          position: "fixed",
+          bottom: 20,
         }}
       />
     </div>

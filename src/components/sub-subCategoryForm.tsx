@@ -11,9 +11,10 @@ import {
 } from "antd";
 import { CategoriesType } from "../pages/category/types/type-category";
 
+
 interface SubCategoryProps {
   submit: (data: CategoriesType) => void;
-  isPending: boolean;
+  isPending?: boolean;
   initialValues?: {
     title?: string;
     image?: string;
@@ -23,6 +24,7 @@ interface SubCategoryProps {
 export const SubSubCategoryForm: React.FC<SubCategoryProps> = ({
   submit,
   initialValues,
+  isPending
 }) => {
   
   const [fileList, setFileList] = React.useState<UploadFile[]>([]);
@@ -77,7 +79,7 @@ export const SubSubCategoryForm: React.FC<SubCategoryProps> = ({
           src={initialValues.image}
         />
       )}
-      <Button type="primary" htmlType="submit">
+      <Button style={{marginTop:"20px"}} loading={isPending} type="primary" htmlType="submit">
         Submit
       </Button>
     </Form>

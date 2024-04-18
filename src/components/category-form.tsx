@@ -41,14 +41,14 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 14 }}
       layout="vertical"
-      style={{ maxWidth: 600 }}
+      style={{ maxWidth: "90%" }}
       onFinish={submit}
       initialValues={initialValues}
     >
-      <Form.Item name={"title"} rules={[{ required: true }]} label="Input">
+      <Form.Item name={"title"} rules={[{ required: true }]} label="Title">
         <Input />
       </Form.Item>
-      <Form.Item label="Upload" name={"image"}>
+      <Form.Item label="Upload Image" name={"image"}>
         <Upload.Dragger
           maxCount={1}
           beforeUpload={() => false}
@@ -56,7 +56,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
           multiple={false}
           fileList={fileList}
           listType="picture-card"
-          style={{ maxWidth: "500px" }}
+          style={{ maxWidth: "90" }}
         >
           <p className="ant-upload-drag-icon">
             <InboxOutlined />
@@ -65,13 +65,13 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
         </Upload.Dragger>
       </Form.Item>
       {initialValues && !fileList.length && (
-        <Image
-          style={{ width: "100px", marginBlock: "30px" }}
+        <Image width={200} height={200}
+          style={{ objectFit:"cover", paddingBlock:"20px", marginBottom:"20px" }}
           src={initialValues.image}
         />
       )}
       <br />
-      <Button type="primary" htmlType="submit">
+      <Button loading={isPending} style={{marginTop:"20px"}} type="primary" htmlType="submit">
         Submit
       </Button>
     </Form>

@@ -31,7 +31,7 @@ const CreateAttributeForm: React.FC<formSubmit> = ({ submit }) => {
           mode="multiple"
           style={{ width: "100%", marginBlock: "20px" }}
         >
-          {data?.map((item) => (
+          {data?.data.results.map((item) => (
             <Select.Option label={item.title} value={item.id}>
               {item.title}
             </Select.Option>
@@ -75,7 +75,7 @@ const CreateAttributeForm: React.FC<formSubmit> = ({ submit }) => {
         )}
       </Form.List>
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button style={{ marginTop: "20px" }} type="primary" htmlType="submit">
           Submit
         </Button>
       </Form.Item>

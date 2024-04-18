@@ -89,7 +89,11 @@ export const CategoryEdit = () => {
       render: (_: any, data: Category) => (
         <div style={{ display: "flex", gap: "15px" }}>
           <Button onClick={() => remove(data.id)}>Delet</Button>
-          <Button onClick={() => navigate(`/home/sub-category-edit/${data.id}`)}>Edit</Button>
+          <Button
+            onClick={() => navigate(`/home/sub-category-edit/${data.id}`)}
+          >
+            Edit
+          </Button>
         </div>
       ),
     },
@@ -99,7 +103,7 @@ export const CategoryEdit = () => {
     {
       key: "1",
       label: "Edit Category",
-      children: ( 
+      children: (
         <CategoryForm
           isPending={isPending}
           submit={submit}

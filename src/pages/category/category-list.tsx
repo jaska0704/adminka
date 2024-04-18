@@ -1,18 +1,31 @@
 import { useGetCategoryList } from "./service/query/useGetCategoryList";
-import { Button, Image, Input, Modal, Pagination, Spin, Table } from "antd";
+import {
+  Button,
+  ConfigProvider,
+  Image,
+  Input,
+  Modal,
+  Pagination,
+  Popconfirm,
+  Spin,
+  Table,
+  TableProps,
+} from "antd";
 import React, { FC } from "react";
 import { usedeletCategory } from "./service/mutation/usedeletCategory";
 import { Link, useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { useGetSearch } from "../sub-category/service/query/useGetSearch";
+import { useGetSearch } from "./service/query/useGetSearch";
 import { SearchOutlined } from "@ant-design/icons";
+import { TinyColor } from "@ctrl/tinycolor";
+import { CategoryListType } from "./types/type-category";
 
-interface Category {
-  id: number;
-  title: string;
-  image: string;
-}
-[];
+const colors2 = ["#fc6076", "#ff9a44", "#ef9d43", "#e75516"];
+const colors3 = ["#40e495", "#30dd8a", "#2bb673"];
+const getHoverColors = (colors: string[]) =>
+  colors.map((color) => new TinyColor(color).lighten(5).toString());
+const getActiveColors = (colors: string[]) =>
+  colors.map((color) => new TinyColor(color).darken(5).toString());
 
 export const CategoryList: FC = () => {
   const [pages, setPages] = React.useState(1);
@@ -37,14 +50,14 @@ export const CategoryList: FC = () => {
     });
   };
 
-  const dataCategory = data?.data.results.map((item: Category) => ({
+  const dataCategory = data?.data.results.map((item: CategoryListType) => ({
     id: item.id,
     title: item.title,
     image: item.image,
     key: item.id,
   }));
 
-  const columns = [
+  const columns: TableProps<CategoryListType>["columns"] = [
     {
       title: "Id",
       dataIndex: "key",
@@ -67,12 +80,62 @@ export const CategoryList: FC = () => {
       title: "Tags",
       key: "tags",
       dataIndex: "tags",
-      render: (_: any, data: Category) => (
+      render: (_, data) => (
         <div style={{ display: "flex", gap: "15px" }}>
-          <Button onClick={() => remove(data.id)}>Delet</Button>
-          <Button onClick={() => navigate(`/home/category-edit/${data.id}`)}>
-            Edit
-          </Button>
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  colorPrimary: `linear-gradient(90deg,  ${colors2.join(
+                    ", "
+                  )})`,
+                  colorPrimaryHover: `linear-gradient(90deg, ${getHoverColors(
+                    colors2
+                  ).join(", ")})`,
+                  colorPrimaryActive: `linear-gradient(90deg, ${getActiveColors(
+                    colors2
+                  ).join(", ")})`,
+                  lineWidth: 0,
+                },
+              },
+            }}
+          >
+            <Popconfirm
+              onConfirm={() => remove(data.id)}
+              title={"Are you delete Sub Category?"}
+            >
+              <Button type="primary" size="large" style={{ width: 100 }}>
+                Delet
+              </Button>
+            </Popconfirm>
+          </ConfigProvider>
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  colorPrimary: `linear-gradient(116deg,  ${colors3.join(
+                    ", "
+                  )})`,
+                  colorPrimaryHover: `linear-gradient(116deg, ${getHoverColors(
+                    colors3
+                  ).join(", ")})`,
+                  colorPrimaryActive: `linear-gradient(116deg, ${getActiveColors(
+                    colors3
+                  ).join(", ")})`,
+                  lineWidth: 0,
+                },
+              },
+            }}
+          >
+            <Button
+              onClick={() => navigate(`/home/category-edit/${data.id}`)}
+              type="primary"
+              size="large"
+              style={{ width: 100 }}
+            >
+              Edit
+            </Button>
+          </ConfigProvider>
         </div>
       ),
     },
@@ -86,7 +149,7 @@ export const CategoryList: FC = () => {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          paddingBlock: "20px",
+          paddingBottom: "20px",
         }}
       >
         <Button
@@ -105,9 +168,10 @@ export const CategoryList: FC = () => {
           onOk={() => setOpen(false)}
           onCancel={() => setOpen(false)}
           width={1000}
+          okButtonProps={{ style: { display: "none" } }}
         >
           <Search
-            style={{ position: "relative", paddingBlock: "10px" }}
+            style={{ position: "relative", paddingTop: "25px" }}
             placeholder="Search text"
             enterButton="Search"
             size="large"
@@ -125,7 +189,7 @@ export const CategoryList: FC = () => {
               {isLoading && search.length >= 3 ? (
                 <Spin />
               ) : (
-                dataSearch.map((item: Category) => {
+                dataSearch.map((item: CategoryListType) => {
                   return (
                     <div
                       style={{
@@ -159,7 +223,7 @@ export const CategoryList: FC = () => {
               )}
             </div>
           ) : (
-            <div style={{textAlign:"center", marginTop:"40px"}}>
+            <div style={{ textAlign: "center", marginTop: "40px" }}>
               <h1>
                 Search
                 <SearchOutlined />
@@ -168,13 +232,16 @@ export const CategoryList: FC = () => {
           )}
         </Modal>
       </div>
-
-      <Table
-        dataSource={dataCategory}
-        columns={columns}
-        style={{ height: "63vh", overflow: "auto", minHeight: "60vh" }}
-        pagination={false}
-      />
+      {dataPending ? (
+        <Spin fullscreen />
+      ) : (
+        <Table
+          dataSource={dataCategory}
+          columns={columns}
+          style={{ height: "74vh", overflow: "auto" }}
+          pagination={false}
+        />
+      )}
       <Pagination
         total={data?.pagesSize}
         onChange={(sizes) => setPages((sizes - 1) * 5)}
@@ -182,10 +249,9 @@ export const CategoryList: FC = () => {
         defaultCurrent={1}
         style={{
           padding: "5px",
-          backgroundColor: "#d6b5d6",
-          width: "100%",
-          borderBottomRightRadius: "15px",
-          borderBottomLeftRadius: "15px",
+          width: "79.6%",
+          position: "fixed",
+          bottom: 15,
         }}
       />
     </div>

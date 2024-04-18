@@ -59,7 +59,9 @@ export const AttributForm: React.FC<AtributType> = ({
     }
   };
 
-  return ( isPending || isPendingDel ? <Spin/> :
+  return isPending || isPendingDel ? (
+    <Spin />
+  ) : (
     <Form
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 18 }}
@@ -78,7 +80,7 @@ export const AttributForm: React.FC<AtributType> = ({
             >
               {fields.map((field) => {
                 // console.log(initialValue?.attributes[field.key].values.length);
-                  
+
                 return (
                   <Card
                     size="small"
@@ -123,10 +125,13 @@ export const AttributForm: React.FC<AtributType> = ({
                                 </Form.Item>
                                 <CloseOutlined
                                   onClick={() => {
-                                    isPending ? <Spin/> :
-                                    deletAttribut(
-                                      initialValue?.attributes[field.key]
-                                        ?.values[subField.key]?.id
+                                    isPending ? (
+                                      <Spin />
+                                    ) : (
+                                      deletAttribut(
+                                        initialValue?.attributes[field.key]
+                                          ?.values[subField.key]?.id
+                                      )
                                     );
                                     subOpt.remove(subField.name);
                                   }}
@@ -155,7 +160,7 @@ export const AttributForm: React.FC<AtributType> = ({
           );
         }}
       </Form.List>
-      <Button type="primary" htmlType="submit">
+      <Button loading={isPending} style={{ marginTop: "20px" }} type="primary" htmlType="submit">
         Submit
       </Button>
     </Form>

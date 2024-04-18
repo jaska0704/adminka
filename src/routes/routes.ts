@@ -18,6 +18,7 @@ import { ProductList } from "../pages/product/product-list";
 import BannerList from "../pages/banner/banner-list";
 import { BannerCreate } from "../pages/banner/banner-create";
 import { BannerEdit } from "../pages/banner/banner-edit";
+import { NotFound } from "../pages/NotFound/not-found";
 
 
 interface Routes {
@@ -120,5 +121,10 @@ export const mainPages: Routes[] = [
         id: nanoid(),
         component: BannerList,
         path: "banner-list",
+    },
+    {
+        id: nanoid(),
+        component: NotFound,
+        path: "*",
     },
 ]

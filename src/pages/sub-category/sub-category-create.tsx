@@ -1,18 +1,20 @@
-import { Tabs, message } from "antd";
+import { Spin, Tabs, message } from "antd";
 import { SubCategoryForm } from "../../components/sub-category-form";
 import { CategoriesType, attributType } from "../category/types/type-category";
 import { AttributForm } from "../../components/attribut-form";
 import { useAttributCreate } from "./service/mutation/useAttributCreate";
-import React from "react";
+import React, { useEffect } from "react";
 import { useCreateSubCategory } from "./service/mutation/useCreateSubCategory";
 
 export const SubCategoryCreate = () => {
+   const [formSubmit, setFormSubmit] = React.useState(false);
+   const [active, setActive] = React.useState("1");
+   const [disaeblade, setDisaeblade] = React.useState(true);
   const { mutate, isPending: subCategoryPending } = useCreateSubCategory();
   const { mutate: attributMutate } = useAttributCreate();
   const [attribut, setAttribut] = React.useState<number | undefined>(undefined);
 
   const attributSubmit = (data: attributType) => {
-    console.log(data);
 
     const attributes = data?.items.map((item) => {
       return {
@@ -26,6 +28,7 @@ export const SubCategoryCreate = () => {
         }),
       };
     });
+
     const dataa = { attributes, category_id: attribut };
 
     attributMutate(dataa, {
@@ -43,15 +46,22 @@ export const SubCategoryCreate = () => {
 
     mutate(dataForm, {
       onSuccess: (res) => {
-        message.success("success");
-        console.log(res.data);
+        message.success("Sub category created!");
         setAttribut(res.data.id);
+        setFormSubmit(true)
       },
       onError: () => {
-        message.error("error");
+        message.error("Error");
       },
     });
   };
+
+  useEffect(()=> {
+    if(formSubmit) {
+      setActive("2");
+      setDisaeblade(false)
+    }
+  })
 
   const item = [
     {
@@ -65,8 +75,9 @@ export const SubCategoryCreate = () => {
       key: "2",
       label: "Attribute",
       children: <AttributForm submit={attributSubmit} />,
+      disabled: disaeblade,
     },
   ];
 
-  return <Tabs defaultActiveKey="1" items={item} />;
+  return subCategoryPending ? (<Spin/>) : <Tabs activeKey={active} items={item} />;
 };

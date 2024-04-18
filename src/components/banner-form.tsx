@@ -6,9 +6,7 @@ import {
   UploadFile,
   UploadProps,
   Form,
-  Upload,
-  notification,
-  Card,
+  Upload
 } from "antd";
 import React from "react";
 import { TypeBanner } from "../pages/category/types/type-category";
@@ -85,7 +83,12 @@ export const BannerForm: React.FC<Bannertaype> = ({
       <Form.Item name={"description"}>
         <ReactQuill value={value} onChange={handleChange} />
       </Form.Item>
-      <Button type="primary" loading={isPending} htmlType="submit">
+      <Button
+        style={{ marginTop: "20px" }}
+        type="primary"
+        loading={isPending}
+        htmlType="submit"
+      >
         Submit
       </Button>
     </Form>

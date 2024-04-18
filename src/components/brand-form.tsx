@@ -1,43 +1,37 @@
 import React from "react";
 import { InboxOutlined } from "@ant-design/icons";
 import {
+  Button,
   Form,
+  Image,
   Input,
-  Select,
+  Spin,
   Upload,
   UploadFile,
-  Button,
   UploadProps,
-  Image,
-  Spin,
 } from "antd";
+import { brand, types } from "../pages/category/types/type-category";
 
-import { CategoriesType } from "../pages/category/types/type-category";
-import { useGetSelectSubcategory } from "../pages/sub-category/service/query/useGetSelectSubCategory";
-
-interface SubCategoryProps {
-  submit: (data: CategoriesType) => void;
+interface BrandFormProps {
+  submit: (data: brand) => void;
   isPending?: boolean;
-  initialValues?: {
-    title?: string;
-    image?: string;
-  };
+  initialValues?: types
 }
 
-export const SubCategoryForm: React.FC<SubCategoryProps> = ({
+export const BrandForm: React.FC<BrandFormProps> = ({
   isPending,
   submit,
   initialValues,
 }) => {
-  const { data: categories } = useGetSelectSubcategory();
   const [fileList, setFileList] = React.useState<UploadFile[]>([]);
   const [form] = Form.useForm();
 
   const onchange: UploadProps["onChange"] = ({ fileList }) => {
     setFileList(fileList);
   };
-
-  return ( isPending ? <Spin/> :
+  return isPending ? (
+    <Spin />
+  ) : (
     <Form
       form={form}
       labelCol={{ span: 4 }}
@@ -47,27 +41,10 @@ export const SubCategoryForm: React.FC<SubCategoryProps> = ({
       onFinish={submit}
       initialValues={initialValues}
     >
-      <Form.Item
-        name="parent"
-        rules={[{ required: true, message: "Please select a category!" }]}
-      >
-        <Select placeholder="Select a category">
-          {categories?.map((item) => (
-            <Select.Option key={item.id} label={item.title} value={item.id}>
-              {item.title}
-            </Select.Option>
-          ))}
-        </Select>
-      </Form.Item>
-
-      <Form.Item
-        label="Title"
-        name="title"
-      >
+      <Form.Item name={"title"} rules={[{ required: true }]} label="Input">
         <Input />
       </Form.Item>
-
-      <Form.Item label="Image" name="image">
+      <Form.Item label="Upload" name={"image"}>
         <Upload.Dragger
           maxCount={1}
           beforeUpload={() => false}
@@ -86,10 +63,16 @@ export const SubCategoryForm: React.FC<SubCategoryProps> = ({
       {initialValues && !fileList.length && (
         <Image
           style={{ width: "100px", marginBlock: "30px" }}
-          src={initialValues?.image}
+          src={initialValues.image}
         />
       )}
-      <Button loading={isPending} type="primary" htmlType="submit">
+      <br />
+      <Button
+        style={{ marginTop: "20px" }}
+        type="primary"
+        htmlType="submit"
+        loading={isPending}
+      >
         Submit
       </Button>
     </Form>

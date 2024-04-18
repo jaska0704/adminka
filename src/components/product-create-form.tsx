@@ -50,24 +50,26 @@ export const ProductCreateForm: React.FC<ProductFormProps> = ({
   ) : (
     <Form
       form={form}
-      //   labelCol={{ span: 4 }}
-      //   layout="vertical"
       style={{ maxWidth: 600 }}
       onFinish={submit}
       initialValues={initialValues}
     >
-      {activ ? <Form.Item name={"category"}>
-        <Select
-          placeholder="Select a category"
-          style={{ width: "100%", marginBlock: "20px" }}
-        >
-          {data?.map((item) => (
-            <Select.Option label={item.title} value={item.id}>
-              {item.title}
-            </Select.Option>
-          ))}
-        </Select>
-      </Form.Item> : <p></p>}
+      {activ ? (
+        <Form.Item name={"category"}>
+          <Select
+            placeholder="Select a category"
+            style={{ width: "100%", marginBlock: "20px" }}
+          >
+            {data?.data?.results.map((item) => (
+              <Select.Option label={item.title} value={item.id}>
+                {item.title}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+      ) : (
+        <p></p>
+      )}
       <Form.Item name={"title"} rules={[{ required: true }]} label="Title">
         <Input />
       </Form.Item>
@@ -84,7 +86,7 @@ export const ProductCreateForm: React.FC<ProductFormProps> = ({
         </Form.Item>
       </div>
       <Form.Item name={"price"} label="Price">
-        <InputNumber  />
+        <InputNumber />
       </Form.Item>
       <Form.Item label="Image" name={"image"}>
         <Upload.Dragger
@@ -109,7 +111,7 @@ export const ProductCreateForm: React.FC<ProductFormProps> = ({
         />
       )}
       <br />
-      <Button type="primary" htmlType="submit">
+      <Button style={{ marginTop: "20px" }} loading={isPending} type="primary" htmlType="submit">
         Submit
       </Button>
     </Form>
