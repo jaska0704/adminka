@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Layout, Menu, theme } from "antd";
 import {
   HomeOutlined,
@@ -8,32 +8,25 @@ import {
   SafetyOutlined,
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import "./style-main.scss";
 import image from "../../public/icons.png";
 import Cookies from "js-cookie";
 
 const { Header, Content, Sider } = Layout;
 
-// interface MenuItem {
-//   key: number;
-//   icon: React.ReactNode;
-//   label: string | React.ReactNode;
-// }
 
-// const sideBar: MenuItem[] = [
- 
-// ];
-
-// const items2: MenuItem[] = sideBar.map((item) => ({
-//   key: item.key,
-//   icon: item.icon,
-//   label: item.label,
-// }));
 
 export const MainLayout: React.FC = () => {
 
   const token = Cookies.get("Token");
+  const navigate = useNavigate()
+
+  useEffect(()=> {
+    if(!token){
+      navigate("/")
+    }
+  })
   const [collapsed, setCollapsed] = React.useState(false);
   const {
     token: { colorBgContainer },

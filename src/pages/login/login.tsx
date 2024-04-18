@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "./service/mutation/useLogin";
 import Cookies from "js-cookie";
@@ -21,6 +21,9 @@ const Login: React.FC = () => {
         Cookies.set("Token", data.token, { expires: 7 });
 
         navigate("/home", { replace: true });
+      },
+      onError: () => {
+        message.error("Login or password error!");
       },
     });
   };
