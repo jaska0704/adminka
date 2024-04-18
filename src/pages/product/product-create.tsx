@@ -51,7 +51,7 @@ export const ProductCreate = () => {
   return (
     <div>
       <div>
-        <ProductCreateForm submit={submit} activ={true}/>
+        <ProductCreateForm isPending={isPending} submit={submit} activ={true}/>
       </div>
     </div>
   );

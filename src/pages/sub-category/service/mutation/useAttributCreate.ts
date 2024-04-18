@@ -1,6 +1,6 @@
 import { request } from "../../../../config/request";
 import { useMutation } from "@tanstack/react-query";
-import { AttributType, attributType } from "../../../category/types/type-category";
+import { AttributType} from "../../../category/types/type-category";
 
 
 export const useAttributCreate = () => {

@@ -13,7 +13,7 @@ export const useCreateAttribute = () => {
   return useMutation({
     mutationFn: (data) =>
       request
-        .post("/attribute/", { attr_list: [data] })
+        .post<attype>("/attribute/", { attr_list: [data] })
         .then((res) => res.data),
   });
 };

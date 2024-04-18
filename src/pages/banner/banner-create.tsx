@@ -30,7 +30,7 @@ export const BannerCreate = () => {
 
   return (
     <div>
-      <BannerForm submit={submit} />
+      <BannerForm submit={submit} isPending={isPending}/>
     </div>
   );
 };
