@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEditCategory } from "../category/service/query/useEditCategory";
 import { Tabs, TabsProps, message } from "antd";
 import { TypeCategory, attributType } from "../category/types/type-category";
@@ -14,7 +14,7 @@ export const SubCategoryEdit = () => {
   const { data: datac } = useEditSubcategory(id);
   const { mutate: attributMutate } = useAttributCreate();
   const { mutate, isPending } = useEditPatch(id);
-  console.log(datas);
+  const navigate = useNavigate()
 
   const submit = (value: TypeCategory) => {
     const formData = new FormData();
@@ -25,6 +25,9 @@ export const SubCategoryEdit = () => {
     mutate(formData, {
       onSuccess: (res) => {
         message.success("success");
+         setTimeout(() => {
+           navigate("/home/sub-category-list");
+         }, 3_000);
         console.log(res);
       },
       onError: () => {

@@ -26,7 +26,7 @@ export const BrandEdit = () => {
         });
         message.success("Brand edited successfully!");
         setTimeout(() => {
-          navigate("/home/banner-list");
+          navigate("/home/brand-list");
         }, 3_000);
       },
       onError: () => {
